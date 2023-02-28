@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from sqlalchemy import func
 
-from website import db
+from . import db
 
 
 class User(db.Model, UserMixin):
