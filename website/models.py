@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
 class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
-    players = db.relationship("player", backref="team", lazy=True)
+    players = db.relationship("Player", backref="team", lazy=True)
 
     def __repr__(self):
         return f"Team('{self.name}')"
@@ -24,7 +24,7 @@ class Team(db.Model):
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    team_id = db.Column(db.Integer, db.ForeginKey("team.id"), nullable=False)
+    team_id = db.Column(db.Integer, db.ForeignKey("team.id"), nullable=False)
     ratings = db.relationship("Rating", backref="player", lazy=True)
 
     def __repr__(self):
