@@ -1,8 +1,14 @@
 from flask import Flask
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 from flask_bcrypt import Bcrypt
+from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+
+from flask_migrate import Migrate, MigrateCommand
+
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -21,13 +27,23 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import User
+    from .models import User, Team, Player, Rating
 
     create_database(app)
 
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
+
+    admin = Admin(app)
+    migrate = Migrate(app, db)
+    manager = Manager(app)
+
+    manager.add_command("db", MigrateCommand)
+
+    admin.add_view(ModelView(Team, db.session))
+    admin.add_view(ModelView(Player, db.session))
+    admin.add_view(ModelView(Rating, db.session))
 
     @login_manager.user_loader
     def load_user(user_id):
