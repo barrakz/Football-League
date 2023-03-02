@@ -4,13 +4,10 @@
 <h1>{{ team.name }} Players</h1>
 <ul>
     {% for player in players %}
-
-    <li><a href="{{ url_for('views.player_details', player_id=player.id, user_id=current_user.id) }}">{{ player.name }}</a>
+    <li>
+        <a href="{{ url_for('views.player_details', player_id=player.id, user_id=current_user.id) }}">{{ player.name }}</a>
+        <br>Average Rating: {{ player.average_rating() }}
     </li>
-
-
-
-
     {% endfor %}
 </ul>
 {% endblock %}

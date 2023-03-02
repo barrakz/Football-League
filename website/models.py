@@ -30,6 +30,12 @@ class Player(db.Model):
     def __repr__(self):
         return f"Player('{self.name}', '{self.team.name}')"
 
+    def average_rating(self):
+        if self.ratings:
+            return sum(r.rating for r in self.ratings) / len(self.ratings)
+        else:
+            return 0
+
 
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
