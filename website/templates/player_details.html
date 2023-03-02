@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ player.name }}</h1>
+<p>{{ player.team.name }}</p>
+<h2>Ratings:</h2>
+<ul>
+    {% for rating in player.ratings %}
+    <li>Rating: {{ rating.rating }}, Comment: {{ rating.comment }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

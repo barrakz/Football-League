@@ -10,7 +10,18 @@ views = Blueprint("views", __name__)
 @views.route("/")
 @views.route("/home")
 def home():
-    return "Hello"
+    teams = Team.query.all()
+    return render_template("home.html", teams=teams, user=current_user)
+
+
+@views.route("/team_players/<int:team_id>")
+@login_required
+def team_players(team_id):
+
+
+    team = Team.query.get_or_404(team_id)
+    players = Player.query.filter_by(team_id=team_id).all()
+    return render_template("team_players.html", team=team, players=players, user=current_user)
 
 
 @views.route("/addteam", methods=["GET", "POST"])
@@ -53,3 +64,9 @@ def rate_player(player_id):
         return redirect(url_for("views.home", player_id=player_id))
 
     return render_template("rate_player.html", player=player, user=current_user)
+
+
+@views.route('/player/<int:player_id>')
+def player_details(player_id):
+    player = Player.query.get_or_404(player_id)
+    return render_template('player_details.html', player=player, user=current_user)
