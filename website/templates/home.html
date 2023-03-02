@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Team List</h1>
+    <ul>
+      {% for team in teams %}
+      <li><a href="{{ url_for('views.team_players', team_id=team.id) }}">{{ team.name }}</a></li>
+      {% endfor %}
+    </ul>
+{% endblock %}

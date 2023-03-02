@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ player.name }} ({{ player.average_rating() }})</h1>
+<p>{{ player.team.name }}</p>
+<h2>Ratings:</h2>
+<ul>
+    {% for rating in player.ratings %}
+    <li>Rating: {{ rating.rating }}, Comment: {{ rating.comment }}</li>
+    {% endfor %}
+
+    <a href="{{ url_for('views.rate_player', player_id=player.id) }}">Add Rating</a>
+
+</ul>
+{% endblock %}
