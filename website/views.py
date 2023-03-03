@@ -27,8 +27,8 @@ def team_players(team_id):
     #     else:
     #         player.average_rating = None
 
-    return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating, user=current_user)
-
+    return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating,
+                           user=current_user)
 
 
 @views.route("/addteam", methods=["GET", "POST"])
