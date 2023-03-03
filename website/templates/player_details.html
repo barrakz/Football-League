@@ -1,15 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ player.name }} ({{ player.average_rating() }})</h1>
-<p>{{ player.team.name }}</p>
-<h2>Ratings:</h2>
-<ul>
+<h1 align="center">{{ player.name }} ({{ player.average_rating() }})</h1>
+<p align="center">{{ player.team.name }}</p>
+<br>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Comment</th>
+        <th scope="col">Rating</th>
+        <th scope="col">User</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for rating in player.ratings %}
-    <li>Rating: {{ rating.rating }}, Comment: {{ rating.comment }}</li>
+    <tr>
+        <td>{{ rating.comment }}</td>
+        <td>{{ rating.rating }}</td>
+        <td>{{ username }}</td>
+
+
+    </tr>
     {% endfor %}
-
-    <a href="{{ url_for('views.rate_player', player_id=player.id) }}">Add Rating</a>
-
-</ul>
+    </tbody>
+</table>
+<div align="center">
+<a href="{{ url_for('views.rate_player', player_id=player.id) }}"
+   class="btn btn-primary btn-lg active"
+   role="button"
+   aria-pressed="true">Add Rating</a>
+</div>
 {% endblock %}

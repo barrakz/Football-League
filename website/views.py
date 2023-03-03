@@ -27,8 +27,8 @@ def team_players(team_id):
     #     else:
     #         player.average_rating = None
 
-    return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating, user=current_user)
-
+    return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating,
+                           user=current_user)
 
 
 @views.route("/addteam", methods=["GET", "POST"])
@@ -63,11 +63,11 @@ def add_player():
 def rate_player(player_id):
     player = Player.query.get_or_404(player_id)
 
-    existing_rating = Rating.query.filter_by(player_id=player_id, user_id=current_user.id).first()
-
-    if existing_rating:
-        flash("You have already rated this player.", "danger")
-        return redirect(url_for("views.player_details", player_id=player_id))
+    # existing_rating = Rating.query.filter_by(player_id=player_id, user_id=current_user.id).first()
+    #
+    # if existing_rating:
+    #     flash("You have already rated this player.", "danger")
+    #     return redirect(url_for("views.player_details", player_id=player_id))
 
     if request.method == 'POST':
         rating = request.form["rating"]
@@ -85,4 +85,5 @@ def rate_player(player_id):
 @views.route('/player/<int:player_id>')
 def player_details(player_id):
     player = Player.query.get_or_404(player_id)
-    return render_template('player_details.html', player=player, user=current_user)
+
+    return render_template('player_details.html', player=player, user=current_user, username=current_user.username)

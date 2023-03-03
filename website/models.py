@@ -32,7 +32,7 @@ class Player(db.Model):
 
     def average_rating(self):
         if self.ratings:
-            return sum(r.rating for r in self.ratings) / len(self.ratings)
+            return round(sum(r.rating for r in self.ratings) / len(self.ratings), 1)
         else:
             return 0
 
@@ -43,6 +43,7 @@ class Rating(db.Model):
     comment = db.Column(db.Text, nullable=True)
     player_id = db.Column(db.Integer, db.ForeignKey("player.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
 
     def __repr__(self):
         return f"Rating('{self.rating}', '{self.comment}')"
