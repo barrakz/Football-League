@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ team.name }} Players</h1>
-<ul>
+<h1 align="center">{{ team.name }}</h1>
+<br>
+
+<div class="list-group">
     {% for player in players %}
-    <li>
-        <a href="{{ url_for('views.player_details', player_id=player.id, user_id=current_user.id) }}">{{ player.name }}</a>
-        <br>Average Rating: {{ player.average_rating() }}
-    </li>
+    <a href="{{ url_for('views.player_details', player_id=player.id, user_id=current_user.id) }}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ player.name }}</h5>
+            <small>{{ player.average_rating() }}</small>
+        </div>
+    </a>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}
+
