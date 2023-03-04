@@ -14,8 +14,9 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 def home():
     teams = Team.query.all()
-
-    return render_template("home.html", teams=teams, user=current_user)
+    top_players = Player.query.all()
+    top_players = sorted(top_players, key=lambda x: x.average_rating(), reverse=True)[:10]
+    return render_template("home.html", teams=teams, user=current_user, top_players=top_players)
 
 
 @views.route("/team_players/<int:team_id>")

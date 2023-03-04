@@ -15,10 +15,30 @@
             team.name }}</a>
         {% endfor %}
     </div>
+    <br><br>
+
+    <h2>Top Players</h2>
+    <br>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Average Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for player in top_players %}
+        <tr>
+            <td><a href="{{ url_for('views.player_details', player_id=player.id) }}">{{ player.name }}</a></td>
+            <td>{{ player.average_rating() }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 </div>
-
-
+</div>
 
 
 {% endblock %}
