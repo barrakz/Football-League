@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 align="center">Edit Panel</h1>
+<br>
+<div align="center">
+<a href="{{ url_for('views.add_player') }}"
+   class="btn btn-primary btn-lg active"
+   role="button"
+   aria-pressed="true">Add Player</a>
+
+
+<a href="{{ url_for('views.add_team') }}"
+   class="btn btn-primary btn-lg active"
+   role="button"
+   aria-pressed="true">Add Team</a>
+</div>
+
+{% endblock %}

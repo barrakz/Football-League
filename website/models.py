@@ -43,7 +43,7 @@ class Rating(db.Model):
     comment = db.Column(db.Text, nullable=True)
     player_id = db.Column(db.Integer, db.ForeignKey("player.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 
     def __repr__(self):
         return f"Rating('{self.rating}', '{self.comment}')"
