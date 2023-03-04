@@ -11,6 +11,7 @@
         <th scope="col">Comment</th>
         <th scope="col">Rating</th>
         <th scope="col">User</th>
+        <th scope="col">Date</th>
     </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
         <td>{{ rating.comment }}</td>
         <td>{{ rating.rating }}</td>
         <td>{{ username }}</td>
+        <td>{{ rating.date_created }}</td>
 
 
     </tr>
@@ -31,4 +33,9 @@
    role="button"
    aria-pressed="true">Add Rating</a>
 </div>
+<br>
+<div align="center">
+    <a href="{{ url_for('views.team_players', team_id=player.team_id) }}" class="btn btn-primary">Back to team</a>
+</div>
+
 {% endblock %}
