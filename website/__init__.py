@@ -44,6 +44,7 @@ def create_app():
     admin.add_view(ModelView(Team, db.session))
     admin.add_view(ModelView(Player, db.session))
     admin.add_view(ModelView(Rating, db.session))
+    admin.add_view(ModelView(User, db.session))
 
     @login_manager.user_loader
     def load_user(user_id):
