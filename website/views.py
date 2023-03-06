@@ -8,7 +8,6 @@ from .models import Team, Player, Rating
 from . import db
 from .utils import admin_required
 
-
 views = Blueprint("views", __name__)
 
 
@@ -26,13 +25,6 @@ def home():
 def team_players(team_id):
     team = Team.query.get_or_404(team_id)
     players = Player.query.filter_by(team_id=team_id).all()
-
-    # for player in players:
-    #     if player.ratings:
-    #         average_rating = sum([rating.rating for rating in player.ratings]) / len(player.ratings)
-    #         player.average_rating = average_rating
-    #     else:
-    #         player.average_rating = None
 
     return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating,
                            user=current_user)
@@ -106,5 +98,4 @@ def player_details(player_id):
 @login_required
 @admin_required
 def admin_edit():
-
     return render_template("adminedit.html", user=current_user)
