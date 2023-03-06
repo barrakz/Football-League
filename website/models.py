@@ -11,6 +11,15 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 
+    @staticmethod
+    def assign_admin_role():
+        user = User.query.filter_by(email='b.rakuzy@gmail.com').first()
+        if user:
+            user.is_admin = True
+            db.session.commit()
+            return user
+        return None
+
 
 class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
