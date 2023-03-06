@@ -6,6 +6,7 @@ from sqlalchemy import desc
 
 from .models import Team, Player, Rating
 from . import db
+from .utils import admin_required
 
 views = Blueprint("views", __name__)
 
@@ -25,19 +26,13 @@ def team_players(team_id):
     team = Team.query.get_or_404(team_id)
     players = Player.query.filter_by(team_id=team_id).all()
 
-    # for player in players:
-    #     if player.ratings:
-    #         average_rating = sum([rating.rating for rating in player.ratings]) / len(player.ratings)
-    #         player.average_rating = average_rating
-    #     else:
-    #         player.average_rating = None
-
     return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating,
                            user=current_user)
 
 
 @views.route("/addteam", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_team():
     if request.method == 'POST':
         name = request.form["name"]
@@ -50,6 +45,7 @@ def add_team():
 
 @views.route("/addplayer", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_player():
     if request.method == 'POST':
         name = request.form["name"]
@@ -100,5 +96,6 @@ def player_details(player_id):
 
 @views.route('/adminedit')
 @login_required
+@admin_required
 def admin_edit():
     return render_template("adminedit.html", user=current_user)
