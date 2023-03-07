@@ -24,7 +24,7 @@ def home():
 @login_required
 def team_players(team_id):
     team = Team.query.get_or_404(team_id)
-    players = Player.query.filter_by(team_id=team_id).all()
+    players = Player.query.filter_by(team_id=team_id).order_by(Player.name).all()
 
     return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating,
                            user=current_user)
