@@ -99,3 +99,5 @@ def player_details(player_id):
 @admin_required
 def admin_edit():
     return render_template("adminedit.html", user=current_user)
+
+
