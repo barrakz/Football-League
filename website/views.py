@@ -16,7 +16,7 @@ views = Blueprint("views", __name__)
 def home():
     teams = Team.query.all()
     top_players = Player.query.all()
-    top_players = sorted(top_players, key=lambda x: x.average_rating(), reverse=True)[:10]
+    top_players = sorted(top_players, key=lambda x: x.average_rating(), reverse=True)[:5]
     return render_template("home.html", teams=teams, user=current_user, top_players=top_players)
 
 
