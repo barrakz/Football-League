@@ -12,7 +12,8 @@
 
         {% for team in sorted_teams %}
         <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action">{{
-            team.name }}</a>
+            team.name }} ({{ team.average_player_rating() }})</a>
+
         {% endfor %}
     </div>
     <br><br>
@@ -24,13 +25,15 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>Team</th>
             <th>Average Rating</th>
         </tr>
         </thead>
         <tbody>
         {% for player in top_players %}
         <tr>
-            <td><a href="{{ url_for('views.player_details', player_id=player.id) }}">{{ player.name }}</a></td>
+            <td><a href="{{ url_for('views.player_details', player_id=player.id) }}">{{ player.name }} </a></td>
+            <td>{{ player.team.name }}</td>
             <td>{{ player.average_rating() }}</td>
         </tr>
         {% endfor %}
