@@ -24,8 +24,8 @@ Creating a top 5 ranking of the best-rated players
 
 <h3>Technologies:</h3>
 
-Flask - a web framework in Python
+Flask
 
-SQLAlchemy - an ORM for Python
+SQLAlchemy
 
-HTML - for creating the user interface
+HTML
