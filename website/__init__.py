@@ -9,7 +9,6 @@ from flask_login import LoginManager
 
 from flask_migrate import Migrate, MigrateCommand
 
-
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 DB_NAME = "database.db"

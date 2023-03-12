@@ -33,7 +33,7 @@
         {% for player in top_players %}
         <tr>
             <td><a href="{{ url_for('views.player_details', player_id=player.id) }}">{{ player.name }} </a></td>
-            <td>{{ player.team.name }}</td>
+            <td><a href="{{ url_for('views.team_players', team_id=player.team.id) }}">{{ player.team.name }}</a></td>
             <td>{{ player.average_rating() }}</td>
         </tr>
         {% endfor %}
