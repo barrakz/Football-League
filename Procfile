@@ -1,1 +1,1 @@
-web: gunicorn website:create_app()
+web: python app.py
