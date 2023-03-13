@@ -39,9 +39,19 @@
         {% endfor %}
         </tbody>
     </table>
+    <br><br>
+    <div class="comments-section">
+        <h2>Latest 5 Ratings and Comments</h2>
+        <br>
+        {% for rating in latest_ratings %}
+        {{ rating.player.name }} - {{ rating.rating }} - {{ rating.comment }}
+        <br>
+        {% endfor %}
+
+    </div>
+
 
 </div>
-</div>
-
+<br><br>
 
 {% endblock %}

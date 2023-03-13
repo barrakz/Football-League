@@ -17,7 +17,10 @@ def home():
     teams = Team.query.all()
     top_players = Player.query.all()
     top_players = sorted(top_players, key=lambda x: x.average_rating(), reverse=True)[:5]
-    return render_template("home.html", teams=teams, user=current_user, top_players=top_players)
+
+    latest_ratings = Rating.query.order_by(Rating.date_created.desc()).limit(5).all()
+
+    return render_template("home.html", teams=teams, user=current_user, top_players=top_players, latest_ratings=latest_ratings)
 
 
 @views.route("/team_players/<int:team_id>")
@@ -99,5 +102,3 @@ def player_details(player_id):
 @admin_required
 def admin_edit():
     return render_template("adminedit.html", user=current_user)
-
-
