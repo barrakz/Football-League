@@ -29,3 +29,8 @@ Flask
 SQLAlchemy
 
 HTML
+
+
+
+<br><br>
+<b>The application is available at https://barrakz.pythonanywhere.com/.</b>
