@@ -10,6 +10,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     email = db.Column(db.String(150), unique=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    is_admin = db.Column(db.Boolean, default=False)
+
 
 
 class Team(db.Model):
