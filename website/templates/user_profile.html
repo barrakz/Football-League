@@ -4,11 +4,24 @@
 <h1>{{ user.username }}'s Profile</h1>
 
 <h2>Recent Ratings</h2>
-{% for rating in ratings %}
-<div>
-    <p>{{ rating.player.name }}: {{ rating.rating }}</p>
-    <p>{{ rating.comment }}</p>
-</div>
-{% endfor %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Player</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rating in ratings %}
+        <tr>
+            <td>{{ rating.player.name }}</td>
+            <td>{{ rating.rating }}</td>
+            <td>{{ rating.comment }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
