@@ -23,8 +23,9 @@ class Team(db.Model):
         return f"Team('{self.name}')"
 
     def average_player_rating(self):
-        player_ratings = [player.average_rating() for player in self.players]
+        player_ratings = [player.average_rating() for player in self.players if player.average_rating() != "N/A"]
         return round(sum(player_ratings) / len(player_ratings), 2) if player_ratings else "N/A"
+
 
 
 class Player(db.Model):
@@ -40,7 +41,7 @@ class Player(db.Model):
         if self.ratings:
             return round(sum(r.rating for r in self.ratings) / len(self.ratings), 1)
         else:
-            return 0
+            return "N/A"
 
 
 class Rating(db.Model):
@@ -50,6 +51,8 @@ class Rating(db.Model):
     player_id = db.Column(db.Integer, db.ForeignKey("player.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+
+    user = db.relationship('User', backref=db.backref('ratings', lazy=True))
 
     def __repr__(self):
         return f"Rating('{self.rating}', '{self.comment}')"

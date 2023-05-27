@@ -19,7 +19,7 @@
     <tr>
         <td>{{ rating.comment }}</td>
         <td>{{ rating.rating }}</td>
-        <td>{{ username }}</td>
+        <td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}">{{ rating.user.username }}</a></td>
         <td>{{ rating.date_created }}</td>
 
 
