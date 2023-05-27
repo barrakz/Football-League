@@ -4,7 +4,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 from sqlalchemy import desc
 
-from .models import Team, Player, Rating, User
+from .models import Team, Player, Rating
 from . import db
 from .utils import admin_required
 
@@ -14,31 +14,24 @@ views = Blueprint("views", __name__)
 @views.route("/")
 @views.route("/home")
 def home():
+    def rating_key(player):
+        rating = player.average_rating()
+        return rating if rating != "N/A" else float('-inf')
+
     teams = Team.query.all()
     top_players = Player.query.all()
-    top_players = sorted(
-        top_players, key=lambda x: x.average_rating(), reverse=True)[:5]
-
-    latest_ratings = Rating.query.order_by(
-        Rating.date_created.desc()).limit(5).all()
-
-    user_ids = [rating.user_id for rating in latest_ratings]
-
-    user_names = {user.id: user.username for user in User.query.filter(
-        User.id.in_(user_ids)).all()}
-
-    for rating in latest_ratings:
-        rating.user_name = user_names.get(rating.user_id)
+    top_players = sorted(top_players, key=rating_key, reverse=True)[:5]
+    latest_ratings = Rating.query.order_by(Rating.date_created.desc()).limit(5).all()
 
     return render_template("home.html", teams=teams, user=current_user, top_players=top_players, latest_ratings=latest_ratings)
+
 
 
 @views.route("/team_players/<int:team_id>")
 @login_required
 def team_players(team_id):
     team = Team.query.get_or_404(team_id)
-    players = Player.query.filter_by(
-        team_id=team_id).order_by(Player.name).all()
+    players = Player.query.filter_by(team_id=team_id).order_by(Player.name).all()
 
     return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating,
                            user=current_user)
@@ -83,8 +76,7 @@ def rate_player(player_id):
     last_rating = Rating.query.filter_by(player_id=player_id, user_id=current_user.id).order_by(
         Rating.date_created.desc()).first()
     if last_rating and now < last_rating.date_created + timedelta(hours=1):
-        time_remaining = (last_rating.date_created +
-                          timedelta(hours=1) - now).seconds // 60
+        time_remaining = (last_rating.date_created + timedelta(hours=1) - now).seconds // 60
         flash(f"You've already rated this player within the last hour. Please try again in {time_remaining} minutes.",
               "danger")
         return redirect(url_for("views.player_details", player_id=player_id))
@@ -92,8 +84,7 @@ def rate_player(player_id):
     if request.method == 'POST':
         rating = request.form["rating"]
         comment = request.form["comment"]
-        new_rating = Rating(rating=rating, comment=comment,
-                            player_id=player.id, user_id=current_user.id)
+        new_rating = Rating(rating=rating, comment=comment, player_id=player.id, user_id=current_user.id)
         db.session.add(new_rating)
         db.session.commit()
         flash('Rating added successfully!', 'success')
