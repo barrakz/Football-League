@@ -52,5 +52,7 @@ class Rating(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 
+    user = db.relationship('User', backref=db.backref('ratings', lazy=True))
+
     def __repr__(self):
         return f"Rating('{self.rating}', '{self.comment}')"

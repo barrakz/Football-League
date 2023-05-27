@@ -59,7 +59,8 @@
                     <td><a href="{{ url_for('views.player_details', player_id=rating.player.id) }}">{{ rating.player.name }}</a></td>
                     <td>{{ rating.rating }}</td>
                     <td>{{ rating.comment }}</td>
-                    <td>{{ rating.user_name }}</td>
+                    <td><td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}">{{ rating.user.username }}</a></td>
+                </td>
                 </tr>
                 {% endfor %}
             </tbody>

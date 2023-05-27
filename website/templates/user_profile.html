@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ user.username }}'s Profile</h1>
+
+<h2>Recent Ratings</h2>
+{% for rating in ratings %}
+<div>
+    <p>{{ rating.player.name }}: {{ rating.rating }}</p>
+    <p>{{ rating.comment }}</p>
+</div>
+{% endfor %}
+
+{% endblock %}

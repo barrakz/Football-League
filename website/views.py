@@ -4,7 +4,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 from sqlalchemy import desc
 
-from .models import Team, Player, Rating
+from .models import Team, Player, Rating, User
 from . import db
 from .utils import admin_required
 
@@ -106,3 +106,12 @@ def player_details(player_id):
 @admin_required
 def admin_edit():
     return render_template("adminedit.html", user=current_user)
+
+@views.route('/user/<username>')
+@login_required
+def user_profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    ratings = Rating.query.filter_by(user_id=user.id).order_by(Rating.date_created.desc()).all()
+    
+    return render_template('user_profile.html', user=user, ratings=ratings)
+
