@@ -23,31 +23,47 @@
 
     <table class="table">
         <thead>
-        <tr>
-            <th>Name</th>
-            <th>Team</th>
-            <th>Average Rating</th>
-        </tr>
+            <tr>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Average Rating</th>
+            </tr>
         </thead>
         <tbody>
-        {% for player in top_players %}
-        <tr>
-            <td><a href="{{ url_for('views.player_details', player_id=player.id) }}">{{ player.name }} </a></td>
-            <td><a href="{{ url_for('views.team_players', team_id=player.team.id) }}">{{ player.team.name }}</a></td>
-            <td>{{ player.average_rating() }}</td>
-        </tr>
-        {% endfor %}
+            {% for player in top_players %}
+            <tr>
+                <td><a href="{{ url_for('views.player_details', player_id=player.id) }}">{{ player.name }} </a></td>
+                <td><a href="{{ url_for('views.team_players', team_id=player.team.id) }}">{{ player.team.name }}</a>
+                </td>
+                <td>{{ player.average_rating() }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
     <br><br>
     <div class="comments-section">
         <h2>Latest 5 Ratings and Comments</h2>
         <br>
-        {% for rating in latest_ratings %}
-        {{ rating.player.name }} - {{ rating.rating }} - {{ rating.comment }}
-        <br>
-        {% endfor %}
-
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rating in latest_ratings %}
+                <tr>
+                    <td><a href="{{ url_for('views.player_details', player_id=rating.player.id) }}">{{ rating.player.name }}</a></td>
+                    <td>{{ rating.rating }}</td>
+                    <td>{{ rating.comment }}</td>
+                    <td>{{ rating.user_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 
