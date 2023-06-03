@@ -40,7 +40,6 @@ def home():
 
 
 @views.route("/team_players/<int:team_id>")
-@login_required
 def team_players(team_id):
 
     # Retrieve the team with the given team_id from the database
