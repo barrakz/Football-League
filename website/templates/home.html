@@ -8,13 +8,18 @@
 
 <div align="center">
 
-    <div class="list-group">
-
-        {% for team in sorted_teams %}
-        <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action">{{
-            team.name }} ({{ team.average_player_rating() }})</a>
-
-        {% endfor %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-3"> 
+                <div class="list-group">
+                    {% for team in sorted_teams %}
+                        <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action">
+                            {{ team.name }} ({{ team.average_player_rating() }})
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
     <br><br>
 
