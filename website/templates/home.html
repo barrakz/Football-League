@@ -2,23 +2,28 @@
 
 {% block content %}
 
-<h1 align="center">FOOTBALL RATING LEAGUE</h1>
+<h1 align="center">EKSTRAKLASA 2022/2023 OCENY</h1>
 
 {% set sorted_teams = teams | sort(attribute='name') %}
 
 <div align="center">
 
-    <div class="list-group">
-
-        {% for team in sorted_teams %}
-        <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action">{{
-            team.name }} ({{ team.average_player_rating() }})</a>
-
-        {% endfor %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-3"> 
+                <div class="list-group">
+                    {% for team in sorted_teams %}
+                        <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action">
+                            {{ team.name }} ({{ team.average_player_rating() }})
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
     <br><br>
 
-    <h2>Top Players</h2>
+    <h2>Top 10</h2>
     <br>
 
     <table class="table">
@@ -42,7 +47,7 @@
     </table>
     <br><br>
     <div class="comments-section">
-        <h2>Latest 5 Ratings and Comments</h2>
+        <h2>Ostatnie oceny i komentarze</h2>
         <br>
         <table class="table">
             <thead>
@@ -51,6 +56,7 @@
                     <th>Rating</th>
                     <th>Comment</th>
                     <th>User</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +65,9 @@
                     <td><a href="{{ url_for('views.player_details', player_id=rating.player.id) }}">{{ rating.player.name }}</a></td>
                     <td>{{ rating.rating }}</td>
                     <td>{{ rating.comment }}</td>
-                    <td><td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}">{{ rating.user.username }}</a></td>
+                    <td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}">{{ rating.user.username }}</a>
+                    <td>{{ rating.date_created.strftime("%d/%m/%Y, %H:%M") }}</td>
+                        
                 </td>
                 </tr>
                 {% endfor %}
