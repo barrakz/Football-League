@@ -25,23 +25,31 @@ def home():
     top_players = Player.query.all()
 
     # Sort the players based on their ratings
-    top_players = sorted(top_players, key=rating_key, reverse=True)[:5]
+    top_players = sorted(top_players, key=rating_key, reverse=True)[:10]
     
     # Fetch the latest ratings from the database
     latest_ratings = Rating.query.order_by(
         Rating.date_created.desc()).limit(5).all()
+    
+    # Extract the date from each rating and store it in a list
+    latest_dates = [rating.date_created for rating in latest_ratings]
+    
 
     # Render the "home.html" template
-    return render_template("home.html", teams=teams, user=current_user, top_players=top_players, latest_ratings=latest_ratings)
+    return render_template("home.html", teams=teams, user=current_user, top_players=top_players, latest_ratings=latest_ratings, latest_dates=latest_dates)
 
 
 @views.route("/team_players/<int:team_id>")
 @login_required
 def team_players(team_id):
-    team = Team.query.get_or_404(team_id)
-    players = Player.query.filter_by(
-        team_id=team_id).order_by(Player.name).all()
 
+    # Retrieve the team with the given team_id from the database
+    team = Team.query.get_or_404(team_id)
+    
+    # Retrieve all players belonging to the team, ordered by name
+    players = Player.query.filter_by(team_id=team_id).order_by(Player.name).all()
+
+    # Render the "team_players.html" template
     return render_template("team_players.html", team=team, players=players, average_rating=Player.average_rating,
                            user=current_user)
 
