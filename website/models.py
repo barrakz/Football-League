@@ -47,7 +47,7 @@ class Player(db.Model):
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer, nullable=False)
-    comment = db.Column(db.Text, nullable=True)
+    comment = db.Column(db.String(500), nullable=True)
     player_id = db.Column(db.Integer, db.ForeignKey("player.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
