@@ -1,27 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ user.username }}'s Profile</h1>
+<div class="container my-5">
+    <h1 class="text-center">{{ user.username }}'s Profile</h1>
 
-<h2>Recent Ratings</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Player</th>
-            <th scope="col">Rating</th>
-            <th scope="col">Comment</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for rating in ratings %}
-        <tr>
-            <td>{{ rating.player.name }}</td>
-            <td>{{ rating.rating }}</td>
-            <td>{{ rating.comment }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+    <div class="card my-5">
+        <div class="card-header">
+            <h2 class="text-center">Recent Ratings</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rating in ratings %}
+                    <tr>
+                        <td><a href="{{ url_for('views.player_details', player_id=rating.player.id) }}" class="btn btn-success btn-sm">{{ rating.player.name }}</a></td>
+                        <td>{{ rating.rating }}</td>
+                        <td>{{ rating.comment }}</td>
+                        <td>{{ rating.date_created.strftime("%d/%m/%Y, %H:%M") }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
