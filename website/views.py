@@ -115,7 +115,11 @@ def rate_player(player_id):
 @views.route('/player/<int:player_id>')
 def player_details(player_id):
     player = Player.query.get_or_404(player_id)
-
+    
+    if current_user.is_anonymous:
+        flash("You need to sign up to view player details.", category="error")
+        return redirect(url_for("auth.sign_up"))
+    
     return render_template('player_details.html', player=player, user=current_user, username=current_user.username)
 
 
