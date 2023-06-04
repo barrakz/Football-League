@@ -2,18 +2,26 @@
 
 {% block content %}
 
-<h1 align="center">EKSTRAKLASA 2022/2023 OCENY</h1>
+<div class="container my-5">
+    <h1 class="text-center">EKSTRAKLASA 2022/2023 OCENY</h1>
 
-{% set sorted_teams = teams | sort(attribute='name') %}
+    {% set sorted_teams = teams | sort(attribute='name') %}
 
-<div align="center">
-
-    <div class="container">
+    <div class="mt-5">
         <div class="row justify-content-center">
-            <div class="col-3"> 
+            <div class="col-6"> 
                 <div class="list-group">
-                    {% for team in sorted_teams %}
-                        <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action">
+                    {% for team in sorted_teams[:sorted_teams|length // 2] %}
+                        <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action btn btn-primary mb-2 text-center">
+                            {{ team.name }} ({{ team.average_player_rating() }})
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-6"> 
+                <div class="list-group">
+                    {% for team in sorted_teams[sorted_teams|length // 2:] %}
+                        <a href="{{ url_for('views.team_players', team_id=team.id) }}" class="list-group-item list-group-item-action btn btn-primary mb-2 text-center">
                             {{ team.name }} ({{ team.average_player_rating() }})
                         </a>
                     {% endfor %}
@@ -21,62 +29,62 @@
             </div>
         </div>
     </div>
-    <br><br>
-
-    <h2>Top 10</h2>
-    <br>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Team</th>
-                <th>Average Rating</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for player in top_players %}
-            <tr>
-                <td><a href="{{ url_for('views.player_details', player_id=player.id) }}">{{ player.name }} </a></td>
-                <td><a href="{{ url_for('views.team_players', team_id=player.team.id) }}">{{ player.team.name }}</a>
-                </td>
-                <td>{{ player.average_rating() }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <br><br>
-    <div class="comments-section">
-        <h2>Ostatnie oceny i komentarze</h2>
-        <br>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Rating</th>
-                    <th>Comment</th>
-                    <th>User</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for rating in latest_ratings %}
-                <tr>
-                    <td><a href="{{ url_for('views.player_details', player_id=rating.player.id) }}">{{ rating.player.name }}</a></td>
-                    <td>{{ rating.rating }}</td>
-                    <td>{{ rating.comment }}</td>
-                    <td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}">{{ rating.user.username }}</a>
-                    <td>{{ rating.date_created.strftime("%d/%m/%Y, %H:%M") }}</td>
-                        
-                </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    
+    <div class="card my-5">
+        <div class="card-header">
+            <h2 class="text-center">Top 10</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Team</th>
+                        <th>Average Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in top_players %}
+                    <tr>
+                        <td><a href="{{ url_for('views.player_details', player_id=player.id) }}" class="btn btn-success btn-sm">{{ player.name }}</a></td>
+                        <td><a href="{{ url_for('views.team_players', team_id=player.team.id) }}" class="btn btn-primary btn-sm">{{ player.team.name }}</a></td>
+                        <td>{{ player.average_rating() }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
-
+    <div class="card my-5">
+        <div class="card-header">
+            <h2 class="text-center">Ostatnie oceny i komentarze</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>User</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rating in latest_ratings %}
+                    <tr>
+                        <td><a href="{{ url_for('views.player_details', player_id=rating.player.id) }}" class="btn btn-success btn-sm">{{ rating.player.name }}</a></td>
+                        <td>{{ rating.rating }}</td>
+                        <td>{{ rating.comment }}</td>
+                        <td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}" class="btn btn-danger btn-sm">{{ rating.user.username }}</a></td>
+                        <td>{{ rating.date_created.strftime("%d/%m/%Y, %H:%M") }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<br><br>
 
 {% endblock %}

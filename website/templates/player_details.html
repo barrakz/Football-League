@@ -1,41 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align="center">{{ player.name }} ({{ player.average_rating() }})</h1>
-<p align="center">{{ player.team.name }}</p>
-<br>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Comment</th>
-        <th scope="col">Rating</th>
-        <th scope="col">User</th>
-        <th scope="col">Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for rating in player.ratings %}
-    <tr>
-        <td>{{ rating.comment }}</td>
-        <td>{{ rating.rating }}</td>
-        <td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}">{{ rating.user.username }}</a></td>
-        <td>{{ rating.date_created }}</td>
+<div class="container my-5">
+    <h1 class="text-center">{{ player.name }} ({{ player.average_rating() }})</h1>
+    <p class="text-center">{{ player.team.name }}</p>
 
+    <div class="card my-5">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rating in player.ratings %}
+                <tr>
+                    <td>{{ rating.comment }}</td>
+                    <td>{{ rating.rating }}</td>
+                    <td><a href="{{ url_for('views.user_profile', username=rating.user.username) }}" class="btn btn-danger btn-sm">{{ rating.user.username }}</a></td>
+                    <td>{{ rating.date_created }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<div align="center">
-<a href="{{ url_for('views.rate_player', player_id=player.id) }}"
-   class="btn btn-primary btn-lg active"
-   role="button"
-   aria-pressed="true">Add Rating</a>
-</div>
-<br>
-<div align="center">
-    <a href="{{ url_for('views.team_players', team_id=player.team_id) }}" class="btn btn-primary">Back to team</a>
+    <div class="text-center mb-5">
+        <a href="{{ url_for('views.rate_player', player_id=player.id) }}"
+        class="btn btn-primary btn-lg active"
+        role="button"
+        aria-pressed="true">Add Rating</a>
+    </div>
+
+    <div class="text-center">
+        <a href="{{ url_for('views.team_players', team_id=player.team_id) }}" class="btn btn-primary">Back to team</a>
+    </div>
 </div>
 
 {% endblock %}
