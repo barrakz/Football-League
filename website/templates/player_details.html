@@ -3,7 +3,8 @@
 {% block content %}
 
 <div class="container my-5">
-    <h1 class="text-center">{{ player.name }} ({{ player.average_rating() }})</h1>
+    <h1 class="text-center" style="background-color: white; color: black;">{{ player.name }} ({{ player.average_rating() }})</h1>
+
     <p class="text-center">
         <a href="{{ url_for('views.team_players', team_id=player.team.id) }}" class="btn btn-primary">{{ player.team.name }}</a>
     </p>

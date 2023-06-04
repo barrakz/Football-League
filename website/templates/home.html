@@ -3,7 +3,8 @@
 {% block content %}
 
 <div class="container my-5">
-    <h1 class="text-center">EKSTRAKLASA 2022/2023 OCENY</h1>
+    <h1 class="text-center border border-white p-3 mb-4" style="font-size: 2.5rem; background-color: white; color: black;">EKSTRAKLASA OCENY 2022/2023</h1>
+
 
     {% set sorted_teams = teams | sort(attribute='name') %}
 
@@ -29,6 +30,8 @@
             </div>
         </div>
     </div>
+</div>
+
     
     <div class="card my-5">
         <div class="card-header">
